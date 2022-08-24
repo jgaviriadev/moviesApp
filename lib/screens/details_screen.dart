@@ -10,7 +10,6 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // cambiar luego poru una instacia de movie
     final Movie movie = ModalRoute.of(context)!.settings.arguments as Movie;
-    print(movie.title);
     return Scaffold(
       body: CustomScrollView(
         slivers: [

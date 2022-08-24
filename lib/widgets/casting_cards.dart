@@ -20,9 +20,9 @@ class CastingCards extends StatelessWidget {
       builder: (_, AsyncSnapshot<List<Cast>> snapshot){
         if(!snapshot.hasData){
           return Container(
-            constraints: BoxConstraints(maxHeight: 300),
+            constraints: const BoxConstraints(maxHeight: 300),
             height: 180,
-            child: CupertinoActivityIndicator(),
+            child: const CupertinoActivityIndicator(),
           );
         }
         final List<Cast> cast = snapshot.data!;
