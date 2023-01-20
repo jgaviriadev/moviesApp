@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:themoviesdb/models/models.dart';
 import 'package:themoviesdb/providers/movies_provider.dart';
 import 'package:themoviesdb/widgets/widgets.dart';
 
@@ -10,31 +11,40 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final moviesProvider = Provider.of<MoviesProvider>(context);
-
     return  Scaffold(
       appBar: AppBar(
         title: const Text('Peliculas en cine'),
         elevation: 0,
         centerTitle: true,
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.search_outlined),
-        //     onPressed: (){}, 
-        //   )
-        // ],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search_outlined),
+            onPressed: (){}, 
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children:[
             //card swipers
-            CardSwiper(movies: moviesProvider.onDisplayMovies),
-            //listado horizontal de peliculas
-            Movieslider(
-              movies: moviesProvider.popularMovies,
-              title: 'Populares',
-              onNextPage: ()=> moviesProvider.getPopularmovies(),
+            Selector<MoviesProvider, List<Movie>>(
+              selector: (_, myType) => myType.onDisplayMovies,
+              shouldRebuild: (a, b) => a != b,
+              builder: (context, List<Movie> onDisplayMovies, _) {
+                return CardSwiper(movies: onDisplayMovies);
+              },
             ),
+            //horizontal list of movies
+            Selector<MoviesProvider, List<Movie>>(
+              selector: (_, myType) => myType.popularMovies,
+              shouldRebuild: (a, b) => a != b,
+              builder: (context, List<Movie> popularMovies, _) {
+                return Movieslider(
+                  movies: popularMovies, 
+                  onNextPage: () => context.read<MoviesProvider>().getPopularmovies(),
+                );
+              },
+            )
           ],
        ),
       )

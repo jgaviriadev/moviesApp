@@ -15,7 +15,7 @@ class DetailsScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           CustomAppBar(movie: movie,),
-          SliverList(
+          SliverList( 
             delegate:  SliverChildListDelegate([
               PosterAndTitle(movie: movie,),
               Overview(movie: movie),
