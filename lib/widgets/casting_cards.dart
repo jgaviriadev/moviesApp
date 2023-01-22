@@ -13,10 +13,10 @@ class CastingCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
+    //final moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
 
     return FutureBuilder(
-      future: moviesProvider.getMovieCast(movieId),
+      future: context.read<MoviesProvider>().getMovieCast(movieId),
       builder: (_, AsyncSnapshot<List<Cast>> snapshot){
         if(!snapshot.hasData){
           return Container(
